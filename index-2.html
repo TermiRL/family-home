@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0b14" />
+  <title>Familien Einkauf</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Dezenter Hintergrund-Glow für den Glassmorphism-Look -->
+  <div class="background-glow" aria-hidden="true"></div>
+
+  <div class="app">
+
+    <!-- ============================================================
+         Kopfbereich mit Titel und Dashboard-Übersicht
+         ============================================================ -->
+    <header class="app-header">
+      <h1 class="app-title">🛒 Familien Einkauf</h1>
+      <p class="app-subtitle">Gemeinsam nichts mehr vergessen</p>
+
+      <section class="dashboard" aria-label="Übersicht">
+        <div class="stat-card">
+          <span class="stat-value" id="stat-open">–</span>
+          <span class="stat-label">Offen</span>
+        </div>
+        <div class="stat-card stat-card--urgent">
+          <span class="stat-value" id="stat-urgent">–</span>
+          <span class="stat-label">Dringend</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-latest">–</span>
+          <span class="stat-label">Zuletzt hinzugefügt</span>
+        </div>
+      </section>
+    </header>
+
+    <!-- ============================================================
+         Filterleiste (Kategorie-Chips)
+         ============================================================ -->
+    <nav class="filter-bar" id="filter-bar" aria-label="Nach Kategorie filtern">
+      <button class="filter-chip is-active" data-category="alle">Alle</button>
+      <button class="filter-chip" data-category="lebensmittel">🥦 Lebensmittel</button>
+      <button class="filter-chip" data-category="getraenke">🥤 Getränke</button>
+      <button class="filter-chip" data-category="haushalt">🧽 Haushalt</button>
+      <button class="filter-chip" data-category="sonstiges">📦 Sonstiges</button>
+    </nav>
+
+    <!-- ============================================================
+         Einkaufsliste
+         ============================================================ -->
+    <main>
+      <section aria-label="Einkaufsliste">
+        <ul class="item-list" id="item-list">
+          <!-- Einträge werden per JavaScript eingefügt -->
+        </ul>
+
+        <p class="empty-state" id="empty-state" hidden>
+          Keine Artikel auf der Liste. Zeit zum Auffüllen! 🎉
+        </p>
+
+        <p class="loading-state" id="loading-state">
+          Liste wird geladen …
+        </p>
+      </section>
+    </main>
+
+    <!-- ============================================================
+         Schwebender "Hinzufügen"-Button (Mobile First)
+         ============================================================ -->
+    <button class="fab" id="open-add-form" aria-haspopup="dialog" aria-controls="add-sheet">
+      <span aria-hidden="true">+</span>
+      <span class="sr-only">Artikel hinzufügen</span>
+    </button>
+
+  </div>
+
+  <!-- ============================================================
+       Bottom-Sheet zum Hinzufügen eines neuen Artikels
+       ============================================================ -->
+  <div class="sheet-overlay" id="sheet-overlay" hidden></div>
+  <div class="sheet" id="add-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 class="sheet-title" id="sheet-title">Neuer Artikel</h2>
+
+    <form id="add-form" class="add-form">
+      <label class="field-label" for="input-name">Was wird gebraucht?</label>
+      <input
+        type="text"
+        id="input-name"
+        class="text-input"
+        placeholder="z.B. Milch"
+        autocomplete="off"
+        required
+        maxlength="80"
+      />
+
+      <label class="field-label">Priorität</label>
+      <div class="segmented" role="radiogroup" aria-label="Priorität">
+        <button type="button" class="segmented-option priority-hoch" data-priority="hoch">🔴 Hoch</button>
+        <button type="button" class="segmented-option priority-mittel is-active" data-priority="mittel">🟡 Mittel</button>
+        <button type="button" class="segmented-option priority-niedrig" data-priority="niedrig">🟢 Niedrig</button>
+      </div>
+
+      <label class="field-label">Kategorie</label>
+      <div class="segmented" role="radiogroup" aria-label="Kategorie">
+        <button type="button" class="segmented-option is-active" data-category="lebensmittel">🥦 Lebensmittel</button>
+        <button type="button" class="segmented-option" data-category="getraenke">🥤 Getränke</button>
+        <button type="button" class="segmented-option" data-category="haushalt">🧽 Haushalt</button>
+        <button type="button" class="segmented-option" data-category="sonstiges">📦 Sonstiges</button>
+      </div>
+
+      <label class="field-label" for="input-name-creator">Dein Name</label>
+      <input
+        type="text"
+        id="input-name-creator"
+        class="text-input"
+        placeholder="z.B. Mama"
+        autocomplete="off"
+        maxlength="40"
+      />
+      <p class="field-hint" id="creator-hint">Wird dir gemerkt, damit du es nicht jedes Mal eintippen musst.</p>
+
+      <div class="sheet-actions">
+        <button type="button" class="btn btn--ghost" id="cancel-add">Abbrechen</button>
+        <button type="submit" class="btn btn--primary">Hinzufügen</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Kleiner Hinweis-Toast für Rückmeldungen (z.B. bei Fehlern) -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

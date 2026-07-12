@@ -1,0 +1,44 @@
+# =============================================================
+# wrangler.toml
+# Konfiguration für den Cloudflare Worker (API-Backend)
+# =============================================================
+
+name = "family-shopping-api"
+main = "index.js"
+compatibility_date = "2025-01-01"
+
+# -----------------------------------------------------------
+# D1-Datenbank-Bindung
+# Die "database_id" erhältst du nach dem Anlegen der Datenbank mit:
+#   npx wrangler d1 create family-shopping-db
+# Trage die zurückgegebene ID unten ein.
+# -----------------------------------------------------------
+[[d1_databases]]
+binding = "DB"                        # im Code als env.DB ansprechbar
+database_name = "family-shopping-db"
+database_id = "HIER-DEINE-DATABASE-ID-EINTRAGEN"
+
+# -----------------------------------------------------------
+# Umgebungsvariablen (keine Secrets!)
+# ALLOWED_ORIGIN = die Domain, unter der das Frontend läuft.
+# Wird für den CORS-Header "Access-Control-Allow-Origin" genutzt.
+# -----------------------------------------------------------
+[vars]
+ALLOWED_ORIGIN = "https://einkauf.deine-domain.de"
+
+# -----------------------------------------------------------
+# Optional: eigene Route/Domain für den Worker statt *.workers.dev
+# Empfehlung: Subdomain innerhalb derselben Domain wie das Frontend
+# nutzen (z.B. api.deine-domain.de), damit Cloudflare Access beide
+# Bereiche mit derselben Session schützen kann. Dazu die Route hier
+# eintragen und den DNS-Eintrag im Cloudflare Dashboard anlegen.
+# -----------------------------------------------------------
+# routes = [
+#   { pattern = "api.deine-domain.de/*", custom_domain = true }
+# ]
+
+# -----------------------------------------------------------
+# Secrets (z.B. für spätere Erweiterungen) NIEMALS hier eintragen!
+# Stattdessen:
+#   npx wrangler secret put NAME_DES_SECRETS
+# -----------------------------------------------------------
