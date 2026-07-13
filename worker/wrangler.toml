@@ -16,7 +16,7 @@ compatibility_date = "2025-01-01"
 [[d1_databases]]
 binding = "DB"                        # im Code als env.DB ansprechbar
 database_name = "family-shopping-db"
-database_id = "HIER-DEINE-DATABASE-ID-EINTRAGEN"
+database_id = "d4ed9e696-c53c-4516-9dbf-a53eff96f191"
 
 # -----------------------------------------------------------
 # Umgebungsvariablen (keine Secrets!)
